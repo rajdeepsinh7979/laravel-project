@@ -9,15 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->id('UserID');
+            $table->string('FullName');
+            $table->string('Email')->unique();
+            $table->string('Password');
+            $table->string('Phone')->nullable();
+            $table->enum('Gender', ['Male', 'Female', 'Other'])->nullable();
+            $table->text('FarmName')->nullable();
+            $table->enum('Role', ['Farmer', 'Buyer', 'Admin'])->default('Buyer');
+            $table->text('About');
             $table->timestamps();
         });
 
