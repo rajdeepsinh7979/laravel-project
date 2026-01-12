@@ -11,11 +11,11 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
-   height: 150vh;
+  height: 150vh;
 }
 .register-card {
   padding: 2rem;
