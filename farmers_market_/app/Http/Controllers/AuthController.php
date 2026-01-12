@@ -55,25 +55,25 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'FullName' => 'required',
-            'Email' => 'required|email|unique:users',
-            'Phone' => 'nullable|string',
-            'Password' => 'required|min:6',
-            'Gender' => 'nullable|in:Male,Female,Other',
-            'FarmName' => 'nullable|string',
-            'Role' => 'required|in:Farmer,Buyer',
-            'About' => 'required|string',
+                'FullName' => 'required',
+                'Email' => 'required|email|unique:users',
+                'Phone' => 'nullable|string',
+                'Password' => 'required|min:6',
+                'Gender' => 'nullable|in:Male,Female,Other',
+                'FarmName' => 'nullable|string',
+                'Role' => 'required|in:Farmer,Buyer',
+                'About' => 'required|string',
         ]);
 
         User::create([
-            'FullName' => $request->FullName,
-            'Email' => $request->Email,
-            'Password' => Hash::make($request->Password),
-            'Phone' => $request->Phone,
-            'Gender' => $request->Gender,
-            'FarmName' => $request->FarmName,
-            'Role' => $request->Role,
-            'About' => $request->About,
+                'FullName' => $request->FullName,
+                'Email' => $request->Email,
+                'Password' => Hash::make($request->Password),
+                'Phone' => $request->Phone,
+                'Gender' => $request->Gender,
+                'FarmName' => $request->FarmName,
+                'Role' => $request->Role,
+                'About' => $request->About,
         ]);
 
         return redirect('/login')->with('success', 'Registration successful! Please login.');
