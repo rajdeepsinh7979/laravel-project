@@ -18,6 +18,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/farmers', [FarmerController::class, 'dashboard'])->name('farmers');
     Route::get('/buyer/dashboard/{category?}', [BuyerController::class, 'dashboard'])->name('buyer.dashboard');
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });

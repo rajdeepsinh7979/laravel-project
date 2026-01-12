@@ -16,27 +16,31 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'Email' => 'required|email',
-            'Password' => 'required',
-        ]);
+        
+    
+    $request->validate([
+        'Email' => 'required|email',
+        'Password' => 'required',
+    ]);
 
         $credentials = $request->only('Email', 'Password');
 
         // Find user by email
         $user = User::where('Email', $credentials['Email'])->first();
 
+
         if ($user && (Hash::check($credentials['Password'], $user->Password) || $credentials['Password'] === $user->Password)) {
+
             Auth::login($user);
             // Store username and id in session
             session(['username' => $user->FullName, 'user_id' => $user->UserID]);
             
             if ($user->Role == 'Farmer') {
-                return redirect()->route('farmer.dashboard');
-            } elseif ($user->Role == 'Buyer') {
-                return redirect()->route('buyer.dashboard');
-            } else {
-                return redirect()->route('admin.dashboard');
+                 return redirect()->route('farmer.dashboard');
+            }    elseif ($user->Role == 'Buyer') {
+                    return redirect()->route('buyer.dashboard');
+             }else {
+                 return redirect()->route('admin.dashboard');
             }
         }
 
@@ -80,5 +84,5 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
-    
+
 }
