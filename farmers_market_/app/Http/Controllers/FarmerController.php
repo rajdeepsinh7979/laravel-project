@@ -25,12 +25,12 @@ class FarmerController extends Controller
     public function storeProduct(Request $request)
     {
         $request->validate([
-            'ProductName' => 'required|string|max:255',
-            'Category' => 'required|string',
-            'Description' => 'nullable|string',
-            'Price' => 'required|numeric|min:0',
-            'Quantity' => 'required|integer|min:0',
-            'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'ProductName' => 'required|string|max:255',
+                'Category' => 'required|string',
+                'Description' => 'nullable|string',
+                'Price' => 'required|numeric|min:0',
+                'Quantity' => 'required|integer|min:0',
+                'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $farmer_id = Auth::id();

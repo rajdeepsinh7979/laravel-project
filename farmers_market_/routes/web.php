@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/buyer/dashboard/{category?}', [BuyerController::class, 'dashboard'])->name('buyer.dashboard');
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/farmer/orders', [FarmerController::class, 'orders'])->name('farmer.orders');
-    // Route::post('/farmer/store-product', [FarmerController::class, 'storeProduct'])->name('farmer.storeProduct');
+    Route::post('/farmer/store-product', [FarmerController::class, 'storeProduct'])->name('farmer.storeProduct');
     Route::get('/farmer/add-product', [FarmerController::class, 'addProduct'])->name('farmer.addProduct');
     Route::get('/farmer/my-products', [FarmerController::class, 'myProducts'])->name('farmer.myProducts');
     Route::get('/farmer/edit-product/{id}', [FarmerController::class, 'editProduct'])->name('farmer.editProduct');
