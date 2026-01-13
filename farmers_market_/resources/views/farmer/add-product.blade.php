@@ -446,7 +446,7 @@ textarea.form-control {
   @endif
 
   <div class="form-container">
-    <form method="POST" action="{{ route('farmer.storeProduct') }}" enctype="multipart/form-data" id="productForm">
+     <form method="POST" action="{{ route('farmer.storeProduct') }}" enctype="multipart/form-data" id="productForm">
       @csrf
 
       <div class="form-group">

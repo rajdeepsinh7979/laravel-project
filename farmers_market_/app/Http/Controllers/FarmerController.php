@@ -49,7 +49,6 @@ class FarmerController extends Controller
             'Quantity' => $request->Quantity,
             'Image' => $imagePath,
         ]);
-
         return redirect()->route('farmer.myProducts')->with('success', 'Product added successfully!');
     }
 
