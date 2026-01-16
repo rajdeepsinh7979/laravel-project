@@ -179,4 +179,26 @@ class FarmerController extends Controller
 
         return redirect()->route('farmer.profile')->with('success', 'Profile updated successfully!');
     }
+    public function changePassword()
+    {
+        return view('farmer.change-password');
+    }
+
+    public function changePasswordPost(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->Password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        $user->update(['Password' => Hash::make($request->new_password)]);
+
+        return redirect()->route('farmer.profile')->with('success', 'Password changed successfully!');
+    }
 }
