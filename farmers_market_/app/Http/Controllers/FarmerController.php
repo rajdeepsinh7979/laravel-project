@@ -130,4 +130,32 @@ class FarmerController extends Controller
 
         return view('farmer.orders', compact('orders'));
     }
+    public function updateOrderStatus(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|integer',
+            'action' => 'required|in:deliver,cancel',
+        ]);
+
+        $farmer_id = Auth::id();
+        $order_id = $request->order_id;
+        $action = $request->action;
+
+        // Check if the order belongs to this farmer
+        $orderExists = DB::table('orders as o')
+            ->join('orderitems as oi', 'o.OrderID', '=', 'oi.OrderID')
+            ->join('products as p', 'oi.ProductID', '=', 'p.ProductID')
+            ->where('p.FarmerID', $farmer_id)
+            ->where('o.OrderID', $order_id)
+            ->exists();
+
+        if (!$orderExists) {
+            return redirect()->back()->with('error', 'Order not found or access denied.');
+        }
+
+        $status = $action === 'deliver' ? 'Delivered' : 'Cancelled';
+        DB::table('orders')->where('OrderID', $order_id)->update(['Status' => $status]);
+
+        return redirect()->back()->with('success', 'Order status updated successfully!');
+    }
 }
