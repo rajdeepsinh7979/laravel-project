@@ -59,46 +59,46 @@ class FarmerController extends Controller
         return view('farmer.my-products', compact('products'));
     }
 
-    public function editProduct($id)
-    {
-        $farmer_id = Auth::id();
-        $product = Product::where('ProductID', $id)->where('FarmerID', $farmer_id)->firstOrFail();
-        return view('farmer.edit-product', compact('product'));
-    }
-
-    public function updateProduct(Request $request, $id)
-    {
-        $request->validate([
-            'ProductName' => 'required|string|max:255',
-            'Category' => 'required|string',
-            'Description' => 'nullable|string',
-            'Price' => 'required|numeric|min:0',
-            'Quantity' => 'required|integer|min:0',
-            'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $farmer_id = Auth::id();
-        $product = Product::where('ProductID', $id)->where('FarmerID', $farmer_id)->firstOrFail();
-
-        $imagePath = $product->Image;
-        if ($request->hasFile('Image')) {
-            if ($imagePath) {
-                Storage::disk('public')->delete($imagePath);
-            }
-            $imagePath = $request->file('Image')->store('products', 'public');
+        public function editProduct($id)
+        {
+            $farmer_id = Auth::id();
+            $product = Product::where('ProductID', $id)->where('FarmerID', $farmer_id)->firstOrFail();
+            return view('farmer.edit-product', compact('product'));
         }
 
-        $product->update([
-            'ProductName' => $request->ProductName,
-            'Category' => $request->Category,
-            'Description' => $request->Description,
-            'Price' => $request->Price,
-            'Quantity' => $request->Quantity,
-            'Image' => $imagePath,
-        ]);
+        public function updateProduct(Request $request, $id)
+        {
+            $request->validate([
+                'ProductName' => 'required|string|max:255',
+                'Category' => 'required|string',
+                'Description' => 'nullable|string',
+                'Price' => 'required|numeric|min:0',
+                'Quantity' => 'required|integer|min:0',
+                'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        return redirect()->route('farmer.myProducts')->with('success', 'Product updated successfully!');
-    }
+            $farmer_id = Auth::id();
+            $product = Product::where('ProductID', $id)->where('FarmerID', $farmer_id)->firstOrFail();
+
+            $imagePath = $product->Image;
+            if ($request->hasFile('Image')) {
+                if ($imagePath) {
+                    Storage::disk('public')->delete($imagePath);
+                }
+                $imagePath = $request->file('Image')->store('products', 'public');
+            }
+
+            $product->update([
+                'ProductName' => $request->ProductName,
+                'Category' => $request->Category,
+                'Description' => $request->Description,
+                'Price' => $request->Price,
+                'Quantity' => $request->Quantity,
+                'Image' => $imagePath,
+            ]);
+
+            return redirect()->route('farmer.myProducts')->with('success', 'Product updated successfully!');
+        }
 
     public function deleteProduct($id)
     {
