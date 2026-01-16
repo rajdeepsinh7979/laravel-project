@@ -158,4 +158,25 @@ class FarmerController extends Controller
 
         return redirect()->back()->with('success', 'Order status updated successfully!');
     }
+    public function updateProfile()
+    {
+        $user = Auth::user();
+        return view('farmer.update-profile', compact('user'));
+    }
+
+    public function updateProfilePost(Request $request)
+    {
+        $request->validate([
+            'FullName' => 'required|string|max:255',
+            'Email' => 'required|email|unique:users,Email,' . Auth::id() . ',UserID',
+            'Phone' => 'nullable|string|max:15',
+            'FarmName' => 'nullable|string|max:255',
+            'Gender' => 'nullable|string',
+            'About' => 'nullable|string',
+        ]);
+
+        Auth::user()->update($request->only(['FullName', 'Email', 'Phone', 'FarmName', 'Gender', 'About']));
+
+        return redirect()->route('farmer.profile')->with('success', 'Profile updated successfully!');
+    }
 }

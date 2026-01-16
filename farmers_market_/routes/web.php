@@ -30,5 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/farmer/delete-product/{id}', [FarmerController::class, 'deleteProduct'])->name('farmer.deleteProduct');
     Route::get('/farmer/orders', [FarmerController::class, 'orders'])->name('farmer.orders');
         Route::post('/farmer/update-order-status', [FarmerController::class, 'updateOrderStatus'])->name('farmer.updateOrderStatus');
-
+     Route::get('/farmer/profile', [FarmerController::class, 'profile'])->name('farmer.profile');
+    Route::get('/farmer/update-profile', [FarmerController::class, 'updateProfile'])->name('farmer.updateProfile');
+    Route::post('/farmer/update-profile', [FarmerController::class, 'updateProfilePost'])->name('farmer.updateProfilePost');
 });
