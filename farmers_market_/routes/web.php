@@ -35,5 +35,8 @@ Route::middleware('auth')->group(function () {
    
     Route::post('/farmer/update-profile', [FarmerController::class, 'updateProfilePost'])->name('farmer.updateProfilePost');
     Route::get('/farmer/change-password', [FarmerController::class, 'changePassword'])->name('farmer.changePassword');
+    
     Route::post('/farmer/change-password', [FarmerController::class, 'changePasswordPost'])->name('farmer.changePasswordPost');
+    Route::get('/farmer/support', [FarmerController::class, 'support'])->name('farmer.support');
+    Route::post('/farmer/create-support-ticket', [FarmerController::class, 'createSupportTicket'])->name('farmer.createSupportTicket');
 });
