@@ -201,4 +201,27 @@ class FarmerController extends Controller
 
         return redirect()->route('farmer.profile')->with('success', 'Password changed successfully!');
     }
+    public function support()
+    {
+        $farmer_id = Auth::id();
+        $tickets = Support::where('UserID', $farmer_id)->orderBy('CreatedAt', 'desc')->get();
+        return view('farmer.support', compact('tickets'));
+    }
+
+    public function createSupportTicket(Request $request)
+    {
+        $request->validate([
+            'Subject' => 'required|string|max:255',
+            'Message' => 'required|string',
+        ]);
+
+        Support::create([
+            'UserID' => Auth::id(),
+            'Subject' => $request->Subject,
+            'Message' => $request->Message,
+            'Status' => 'Open',
+        ]);
+
+        return redirect()->route('farmer.support')->with('success', 'Support ticket created successfully!');
+    }
 }
