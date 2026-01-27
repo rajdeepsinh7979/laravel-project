@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Farmer's Market - Support</title>
+<title>Create Support Ticket - Farmer's Market</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <style>
 body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidden; }
 
-/* Navbar */
 .navbar {
   background: linear-gradient(90deg, #2f7a32, #4caf50);
   box-shadow:0 2px 8px rgba(0,0,0,0.25);
@@ -35,7 +34,6 @@ body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidde
   .navbar-brand { margin-left:0; }
 }
 
-/* Sidebar */
 .sidebar {
   position: fixed; top: 0; left: 0; width: 250px; height: 100vh;
   background: rgba(47, 122, 50, 0.95); backdrop-filter: blur(10px);
@@ -59,28 +57,18 @@ body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidde
 }
 .logout-section { margin-top:auto; text-align:center; padding:20px; }
 
-.support-card {
+.ticket-card {
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   padding: 30px;
   margin-bottom: 30px;
 }
-.ticket-card {
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 15px;
-  border-left: 4px solid #4caf50;
+.ticket-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
-.status-badge {
-  padding: 3px 8px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.status-open { background: #cce5ff; color: #004085; }
-.status-closed { background: #d4edda; color: #155724; }
+.ticket-header h4 { color: #2f7a32; margin-bottom: 10px; }
 .form-control:focus {
   border-color: #4caf50;
   box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
@@ -96,7 +84,6 @@ body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidde
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ route('buyer.dashboard') }}">
@@ -108,11 +95,10 @@ body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidde
   </div>
 </nav>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <img src="https://via.placeholder.com/60" alt="Profile" class="rounded-circle">
-    <h6>{{ $buyerName }}</h6>
+    <h6>{{ auth()->user()->FullName }}</h6>
     <small>Buyer</small>
   </div>
   <ul class="sidebar-menu">
@@ -132,72 +118,48 @@ body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; overflow-x:hidde
   </div>
 </div>
 
-<!-- Main Content -->
 <div class="container-fluid" style="margin-left: 250px; padding: 20px;">
   <div class="row">
     <div class="col-12">
-      <h2 class="text-success fw-bold mb-4"><i class="bi bi-headset"></i> Support Center</h2>
+      <h2 class="text-success fw-bold mb-4"><i class="bi bi-ticket-perforated"></i> Create Support Ticket</h2>
 
-      <!-- Create New Ticket -->
-      <div class="support-card">
-        <h4 class="mb-3"><i class="bi bi-plus-circle"></i> Create New Support Ticket</h4>
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <h4><i class="bi bi-headset"></i> Need Help?</h4>
+          <p class="text-muted">Submit a support ticket and our team will get back to you soon.</p>
+        </div>
+
         <form method="POST" action="{{ route('buyer.createSupportTicket') }}">
           @csrf
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="subject" class="form-label">Subject</label>
-              <input type="text" class="form-control" id="subject" name="subject" required>
+              <input type="text" class="form-control" id="subject" name="subject" required placeholder="Brief description of your issue">
             </div>
             <div class="col-md-6 mb-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-control" id="category" name="category" required>
-                <option value="">Select Category</option>
-                <option value="Order Issue">Order Issue</option>
-                <option value="Product Quality">Product Quality</option>
-                <option value="Delivery">Delivery</option>
-                <option value="Payment">Payment</option>
-                <option value="Technical">Technical</option>
-                <option value="Other">Other</option>
+              <label for="priority" class="form-label">Priority</label>
+              <select class="form-control" id="priority" name="priority" required>
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Urgent">Urgent</option>
               </select>
             </div>
             <div class="col-12 mb-3">
               <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+              <textarea class="form-control" id="message" name="message" rows="6" required placeholder="Please describe your issue in detail..."></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn-success">
-            <i class="bi bi-send"></i> Submit Ticket
-          </button>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="bi bi-send"></i> Submit Ticket
+            </button>
+            <a href="{{ route('buyer.support') }}" class="btn btn-secondary btn-lg ms-2">
+              <i class="bi bi-arrow-left"></i> Back to Support
+            </a>
+          </div>
         </form>
-      </div>
-
-      <!-- My Support Tickets -->
-      <div class="support-card">
-        <h4 class="mb-3"><i class="bi bi-ticket"></i> My Support Tickets</h4>
-        @if(!empty($tickets))
-          @foreach($tickets as $ticket)
-            <div class="ticket-card">
-              <div class="row">
-                <div class="col-md-8">
-                  <h6 class="mb-1">{{ $ticket->Subject }}</h6>
-                  <p class="mb-1 text-muted">{{ $ticket->Message }}</p>
-                  <small class="text-muted">Created: {{ \Carbon\Carbon::parse($ticket->CreatedAt)->format('d M Y, H:i') }}</small>
-                </div>
-                <div class="col-md-4 text-end">
-                  <span class="status-badge status-{{ strtolower($ticket->Status) }}">
-                    {{ $ticket->Status }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          @endforeach
-        @else
-          <div class="text-center py-4">
-            <i class="bi bi-ticket-x" style="font-size: 3rem; color: #ccc;"></i>
-            <h5 class="text-muted mt-2">No support tickets yet</h5>
-            <p class="text-muted">Your support ticket history will appear here.</p>
-          </div>
-        @endif
       </div>
     </div>
   </div>
