@@ -59,5 +59,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/buyer/online-payment', [BuyerController::class, 'showOnlinePayment'])->name('buyer.onlinePayment');
     Route::post('/buyer/online-payment', [BuyerController::class, 'onlinePayment'])->name('buyer.onlinePayment.post');
     Route::get('/buyer/checkout', [BuyerController::class, 'checkout'])->name('buyer.checkout');
-    
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/farmers', [AdminController::class, 'farmers'])->name('admin.farmers');
+    Route::get('/admin/farmers/{id}', [AdminController::class, 'viewFarmer'])->name('admin.viewFarmer');
+    Route::get('/admin/farmers/{id}/edit', [AdminController::class, 'editFarmer'])->name('admin.editFarmer');
+    Route::put('/admin/farmers/{id}', [AdminController::class, 'updateFarmer'])->name('admin.updateFarmer');
+    Route::patch('/admin/farmers/{id}/toggle-status', [AdminController::class, 'toggleStatusFarmer'])->name('admin.toggleStatusFarmer');
+    Route::delete('/admin/farmers/{id}', [AdminController::class, 'deleteFarmer'])->name('admin.deleteFarmer');
+    Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin.buyers');
+    Route::delete('/admin/buyers/{id}', [AdminController::class, 'deleteBuyer'])->name('admin.deleteBuyer');
+    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::post('/admin/products', [AdminController::class, 'storeProduct'])->name('admin.products.store');
+    Route::put('/admin/products/{id}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+    Route::delete('/admin/products/{id}', [AdminController::class, 'deleteProduct'])->name('admin.products.destroy');
+    Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::post('/admin/orders/update-status', [AdminController::class, 'updateOrderStatus'])->name('admin.orders.updateStatus');
+    Route::get('/admin/support', [AdminController::class, 'support'])->name('admin.support');
+    Route::patch('/admin/support/{id}/toggle-status', [AdminController::class, 'toggleSupportStatus'])->name('admin.support.toggleStatus');
+
     });
