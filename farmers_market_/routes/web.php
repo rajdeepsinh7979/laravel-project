@@ -39,4 +39,25 @@ Route::middleware('auth')->group(function () {
     Route::post('/farmer/change-password', [FarmerController::class, 'changePasswordPost'])->name('farmer.changePasswordPost');
     Route::get('/farmer/support', [FarmerController::class, 'support'])->name('farmer.support');
     Route::post('/farmer/create-support-ticket', [FarmerController::class, 'createSupportTicket'])->name('farmer.createSupportTicket');
-});
+    Route::get('/buyer/dashboard/{category?}', [BuyerController::class, 'dashboard'])->name('buyer.dashboard');
+    Route::post('/buyer/add-to-cart', [BuyerController::class, 'addToCart'])->name('buyer.addToCart');
+    Route::get('/buyer/cart', [BuyerController::class, 'cart'])->name('buyer.cart');
+    Route::get('/buyer/orders', [BuyerController::class, 'orders'])->name('buyer.orders');
+    Route::get('/buyer/profile', [BuyerController::class, 'profile'])->name('buyer.profile');
+    Route::post('/buyer/update-profile', [BuyerController::class, 'updateProfile'])->name('buyer.updateProfile');
+    Route::post('/buyer/change-password', [BuyerController::class, 'changePassword'])->name('buyer.changePassword');
+    Route::get('/buyer/support', [BuyerController::class, 'support'])->name('buyer.support');
+    Route::post('/buyer/create-support-ticket', [BuyerController::class, 'createSupportTicket'])->name('buyer.createSupportTicket');
+    Route::get('/buyer/product/{id}', [BuyerController::class, 'productDetail'])->name('buyer.productDetail');
+    Route::get('/buyer/edit-profile', [BuyerController::class, 'editProfile'])->name('buyer.editProfile');
+    Route::get('/buyer/support-ticket', [BuyerController::class, 'supportTicket'])->name('buyer.supportTicket');
+    Route::post('/buyer/remove-from-cart/{cartId}', [BuyerController::class, 'removeFromCart'])->name('buyer.removeFromCart');
+    Route::post('/buyer/update-cart-quantity/{cartId}', [BuyerController::class, 'updateCartQuantity'])->name('buyer.updateCartQuantity');
+    Route::match(['get', 'post'], '/buyer/payment', [BuyerController::class, 'payment'])->name('buyer.payment');
+    Route::post('/buyer/place-order', [BuyerController::class, 'placeOrder'])->name('buyer.placeOrder');
+    Route::match(['get', 'post'], '/buyer/order-confirmed/{orderId?}', [BuyerController::class, 'orderConfirmed'])->name('buyer.orderConfirmed');
+    Route::get('/buyer/online-payment', [BuyerController::class, 'showOnlinePayment'])->name('buyer.onlinePayment');
+    Route::post('/buyer/online-payment', [BuyerController::class, 'onlinePayment'])->name('buyer.onlinePayment.post');
+    Route::get('/buyer/checkout', [BuyerController::class, 'checkout'])->name('buyer.checkout');
+    
+    });
